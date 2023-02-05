@@ -43,4 +43,6 @@ CREATE TABLE requisicoes(
 CREATE TABLE operacoes(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     descricao VARCHAR(255) not null
-)
+);
+INSERT INTO operacoes VALUES (0, 'ENTRADA');
+INSERT INTO operacoes VALUES (0, 'SAIDA');
