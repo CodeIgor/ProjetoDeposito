@@ -11,10 +11,7 @@
 |
 */
 
-use App\Produto;
-
 Route::get('/', function () {
-    dd(Produto::find(4)->produtos[0]->produtoSimples);
     return view('welcome');
 });
 
@@ -22,7 +19,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::middleware(['auth'])->group(function () {
 
-Route::get('/produtos/table', 'ProdutoController@dataTable')->name('produtos.table');
-Route::get('/produtos/search', 'ProdutoController@search')->name('produtos.search');
-Route::resource('produtos', 'ProdutoController');
+    Route::get('/produtos/table', 'ProdutoController@dataTable')->name('produtos.table');
+    Route::get('/produtos/search', 'ProdutoController@search')->name('produtos.search');
+    Route::resource('produtos', 'ProdutoController');
+});

@@ -118,7 +118,6 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
                     'content') //Token de autenticacao no header do ajax
             },
-            timeout: (30) * 1000 // Tempo maximo de retorno (segundos) * 1000 para milisegundos
         });
     </script>
     @stack('js')
