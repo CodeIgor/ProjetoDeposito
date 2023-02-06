@@ -39,7 +39,7 @@ class ProdutoController extends Controller
     public function store(Request $request)
     {
         $valid = (object) $this->validate($request, [
-            'nome' => 'required', //|unique:produtos',
+            'nome' => 'required|unique:produtos',
             'preco_custo' => 'required',
             'preco_venda' => 'required',
             'produtos' => 'required_with:composto'
@@ -97,7 +97,7 @@ class ProdutoController extends Controller
     public function update(Request $request, Produto $produto)
     {
         $valid = (object) $this->validate($request, [
-            'nome' => 'required', //|unique:produtos',
+            'nome' => 'required|unique:produtos',
             'preco_custo' => 'required',
             'preco_venda' => 'required',
             'produtos' => 'required_with:composto'
@@ -140,12 +140,20 @@ class ProdutoController extends Controller
         return redirect()->route('produtos.index')->with('msg', 'Produto apagado com sucesso!');
     }
 
+    /**
+     * Metodo de carregamento server side do datatable
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
     public function dataTable(Request $request)
     {
         return Datatables::of(Produto::query())
+            // Traducao bool de composto
             ->addColumn('tipo', function ($produto) {
                 return $produto->composto ? 'COMPOSTO' : 'SIMPLES';
             })
+            // Botoes de acao
             ->addColumn('action', function ($produto) {
                 return '<form action="' . route('produtos.destroy', $produto->id) . '"
                 class="d-flex align-items-end excluir" method="POST">
@@ -162,11 +170,19 @@ class ProdutoController extends Controller
             })->make(true);
     }
 
+    /**
+     * Metodo para pesquisa de produtos
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
     public function search(Request $request)
     {
         if (!empty($request->id)) {
+            // Datdos para a tabela
             return Produto::find($request->id);
         } else {
+            // Consulta de produtos simples
             $search = Produto::where('composto', false)->where('nome', 'LIKE', '%' . $request->search . '%')
                 ->select('id', 'nome as text');
 

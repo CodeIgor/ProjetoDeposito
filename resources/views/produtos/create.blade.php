@@ -147,6 +147,7 @@
             $('#preco_custo,#preco_venda').mask("000.000.000,00", {
                 reverse: true
             });
+
             $('#composto').change(function() {
                 if ($(this).prop('checked')) {
                     $('#div_composto').show()
@@ -177,6 +178,7 @@
                 }
             });
 
+            // calculo de custo total
             $('#produtos_table input[type=number]').change(function() {
                 // Alteracao do subtotal
                 let index = $(this).closest('table').find(
@@ -194,6 +196,7 @@
                 calculaTotalCusto()
             })
 
+            // metodo de busca e adicao de produtos
             search.on('select2:select', function() {
                 id = $(this).val()
                 $.get('{{ route('produtos.search') }}?id=' + id, function(data) {

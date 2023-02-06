@@ -32,6 +32,11 @@ class Produto extends Model
         'is_composto' => 'boolean',
     ];
 
+    /**
+     * Mutator para calculo de custo dos produtos compostos
+     *
+     * @return string
+     */
     public function getPrecoCustoAttribute($value)
     {
         $preco_custo = 0;

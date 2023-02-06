@@ -9,6 +9,7 @@ where tipo_operacao = 1
     and e.data_operacao >= :data_inicial
     and e.data_operacao <= :data_final
 group by p.id;
+
 -- Relatorio de saida de estoque
 select t.nome,
     sum(qtde_retirada) as qtde_retirada,
@@ -42,6 +43,7 @@ from (
             ps.id
     ) t
 group by t.nome;
+
 -- Relatorio requisicao de produtos
 select nome_funcionario,
     data_retirada,
